@@ -70,9 +70,16 @@ const createWindow = async () => {
   };
 
   mainWindow = new BrowserWindow({
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      height: 30,
+    },
     show: false,
-    width: 1024,
-    height: 728,
+    minWidth: 340,
+    minHeight: 660,
+    width: 340,
+    height: 660,
+    backgroundColor: 'rgb(80, 80, 80)',
     icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: app.isPackaged
