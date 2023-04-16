@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import './App.css';
 import { useState, useEffect } from 'react';
+import buttons from './buttons';
 
 function App() {
   const [Expression, setExpression] = useState<string>(''); // отвечает за строку выражения сверху
@@ -42,6 +43,12 @@ function App() {
   }
 
   function operation(type: string) {
+    // очистка
+    if (type === 'CE') {
+      clear();
+      return;
+    }
+
     // проверка при повторном выборе знака +-/*
     if (Result === '') {
       setExpression(type);
@@ -53,12 +60,6 @@ function App() {
     const temp = ComputedNum.slice(); // запоминает число над которым работаем
     temp[0] = parseFloat(Result);
     console.log('temp', temp);
-
-    // очистка
-    if (type === 'CE') {
-      clear();
-      return;
-    }
 
     setComputedNum(temp);
     setExpression(type);
@@ -139,7 +140,6 @@ function App() {
           break;
         case 'Numpad0':
           setResult(`${Result}0`);
-          negate();
           break;
         case 'Numpad1':
           setResult(`${Result}1`);
@@ -183,6 +183,34 @@ function App() {
     };
   });
 
+  const getFunctionButton = (type: string, value: string): any => {
+    if (type === 'operation') {
+      return operation(value);
+    }
+    if (type === 'negate') {
+      return negate();
+    }
+    if (type === 'numberInput') {
+      return numberInput(value);
+    }
+    if (type === 'calculateResult') {
+      return calculateResult();
+    }
+    return null;
+  };
+
+  const actions = buttons.map((item) => {
+    // eslint-disable-next-line prettier/prettier
+    return (
+      <div
+        className={`action num_pad ${item.classname}`}
+        onClick={() => getFunctionButton(item.type, item.value)}
+      >
+        <p>{item.value}</p>
+      </div>
+    );
+  });
+
   return (
     <>
       <div id="titleBar">
@@ -193,65 +221,7 @@ function App() {
           <span id="window_result">{Result}</span>
           <span id="window_operation">{Operation}</span>
         </div>
-        <div id="calc_actions">
-          <div className="action num_pad CE" onClick={() => operation('CE')}>
-            <p>CE</p>
-          </div>
-          <div className="action num_pad div" onClick={() => operation('/')}>
-            <p>/</p>
-          </div>
-          <div className="action num_pad mult" onClick={() => operation('*')}>
-            <p>*</p>
-          </div>
-          <div className="action num_pad minus" onClick={() => operation('-')}>
-            <p>-</p>
-          </div>
-          <div className="action num_pad 7" onClick={() => numberInput('7')}>
-            <p>7</p>
-          </div>
-          <div className="action num_pad 8" onClick={() => numberInput('8')}>
-            <p>8</p>
-          </div>
-          <div className="action num_pad 9" onClick={() => numberInput('9')}>
-            <p>9</p>
-          </div>
-          <div className="action num_pad plus" onClick={() => operation('+')}>
-            <p>+</p>
-          </div>
-          <div className="action num_pad 4" onClick={() => numberInput('4')}>
-            <p>4</p>
-          </div>
-          <div className="action num_pad 5" onClick={() => numberInput('5')}>
-            <p>5</p>
-          </div>
-          <div className="action num_pad 6" onClick={() => numberInput('6')}>
-            <p>6</p>
-          </div>
-          <div className="action num_pad 1" onClick={() => numberInput('1')}>
-            <p>1</p>
-          </div>
-          <div className="action num_pad 2" onClick={() => numberInput('2')}>
-            <p>2</p>
-          </div>
-          <div className="action num_pad 3" onClick={() => numberInput('3')}>
-            <p>3</p>
-          </div>
-          <div
-            className="action num_pad result"
-            onClick={() => calculateResult()}
-          >
-            <p>=</p>
-          </div>
-          <div className="action num_pad negate" onClick={() => negate()}>
-            <p>+/-</p>
-          </div>
-          <div className="action num_pad zero" onClick={() => numberInput('0')}>
-            <p>0</p>
-          </div>
-          <div className="action num_pad ." onClick={() => numberInput('.')}>
-            <p>.</p>
-          </div>
-        </div>
+        <div id="calc_actions">{actions}</div>
       </div>
     </>
   );
