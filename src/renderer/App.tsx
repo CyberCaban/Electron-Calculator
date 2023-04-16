@@ -5,10 +5,10 @@ import './App.css';
 import { useState, useEffect } from 'react';
 
 function App() {
-  const [Expression, setExpression] = useState<string>('');
-  const [Result, setResult] = useState<string>('');
-  const [Operation, setOperation] = useState<string>('');
-  const [ComputedNum, setComputedNum] = useState<number[]>([]);
+  const [Expression, setExpression] = useState<string>(''); // отвечает за строку выражения сверху
+  const [Result, setResult] = useState<string>(''); // результат посередине
+  const [Operation, setOperation] = useState<string>(''); // хранит информацию о действии +-*/ и др
+  const [ComputedNum, setComputedNum] = useState<number[]>([]); // хранит числа над которыми производится операция
 
   function clear() {
     setExpression('');
@@ -31,16 +31,33 @@ function App() {
     setResult(Result + number);
   }
 
-  function operation(type: string) {
-    const temp = ComputedNum.slice();
-    temp[0] = parseFloat(Result);
+  function negate() {
+    if (Result[0] === '-') {
+      const temp = Result;
+      setResult(temp.slice(1));
+      return;
+    }
+    const temp = '-'.concat(Result);
+    setResult(temp);
+  }
 
+  function operation(type: string) {
+    // проверка при повторном выборе знака +-/*
+    if (Result === '') {
+      setExpression(type);
+      setOperation(`${ComputedNum[0]} ${type}`);
+      return;
+    }
+
+    // при первичном выборе знака
+    const temp = ComputedNum.slice(); // запоминает число над которым работаем
+    temp[0] = parseFloat(Result);
+    console.log('temp', temp);
+
+    // очистка
     if (type === 'CE') {
       clear();
       return;
-    }
-    if (!isNaN(temp[0])) {
-      console.log(temp[0]);
     }
 
     setComputedNum(temp);
@@ -50,35 +67,42 @@ function App() {
   }
 
   function calculateResult() {
-    const temp = ComputedNum.slice();
+    let temp = ComputedNum.slice();
     temp[1] = parseFloat(Result);
-    console.log(temp);
     setComputedNum(temp);
     switch (Expression) {
       case '+':
         setResult(numCutter(`${temp[0] + temp[1]}`));
-        setOperation('');
         break;
       case '-':
         setResult(numCutter(`${temp[0] - temp[1]}`));
-        setOperation('');
         break;
       case '*':
         setResult(numCutter(`${temp[0] * temp[1]}`));
-        setOperation('');
         break;
       case '/':
         setResult(numCutter(`${temp[0] / temp[1]}`));
-        setOperation('');
-        console.log(Result);
-
         break;
       default:
         break;
     }
+    setOperation('');
+    temp = [];
+    setComputedNum(temp);
   }
 
   useEffect(() => {
+    console.log(
+      'Expression',
+      Expression,
+      'Result',
+      Result,
+      'Operation',
+      Operation,
+      'ComputedNum',
+      ComputedNum
+    );
+
     const keyboardInput = (event: any) => {
       console.log(event.code);
 
@@ -86,6 +110,12 @@ function App() {
         return;
       }
       switch (event.code) {
+        case 'KeyN':
+          negate();
+          break;
+        case 'Enter':
+          calculateResult();
+          break;
         case 'NumpadEnter':
           calculateResult();
           break;
@@ -109,6 +139,7 @@ function App() {
           break;
         case 'Numpad0':
           setResult(`${Result}0`);
+          negate();
           break;
         case 'Numpad1':
           setResult(`${Result}1`);
@@ -210,6 +241,9 @@ function App() {
             onClick={() => calculateResult()}
           >
             <p>=</p>
+          </div>
+          <div className="action num_pad negate" onClick={() => negate()}>
+            <p>+/-</p>
           </div>
           <div className="action num_pad zero" onClick={() => numberInput('0')}>
             <p>0</p>

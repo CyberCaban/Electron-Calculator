@@ -74,8 +74,3 @@ body {
   height: 99%;
   grid-row: span 2;
 }
-
-.zero {
-  width: 99%;
-  grid-column: span 2;
-}
