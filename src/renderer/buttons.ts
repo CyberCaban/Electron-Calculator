@@ -2,77 +2,77 @@ const buttons = [
   {
     value: 'CE',
     classname: 'CE',
-    type: 'operation',
+    type: 'handleClick',
   },
   {
     value: '/',
     classname: 'div',
-    type: 'operation',
+    type: 'handleClick',
   },
   {
     value: '*',
     classname: 'mult',
-    type: 'operation',
+    type: 'handleClick',
   },
   {
     value: '-',
     classname: 'minus',
-    type: 'operation',
+    type: 'handleClick',
   },
   {
     value: '7',
     classname: 'n7',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '8',
     classname: 'n8',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '9',
     classname: 'n9',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '+',
     classname: 'plus',
-    type: 'operation',
+    type: 'handleClick',
   },
   {
     value: '4',
     classname: 'n4',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '5',
     classname: 'n5',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '6',
     classname: 'n6',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '1',
     classname: 'n1',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '2',
     classname: 'n2',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '3',
     classname: 'n3',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '=',
     classname: 'result',
-    type: 'calculateResult',
+    type: 'handleCalculate',
   },
   {
     value: '+/-',
@@ -82,12 +82,12 @@ const buttons = [
   {
     value: '0',
     classname: 'zero',
-    type: 'numberInput',
+    type: 'handleClick',
   },
   {
     value: '.',
     classname: '.',
-    type: 'numberInput',
+    type: 'handleClick',
   },
 ];
 
