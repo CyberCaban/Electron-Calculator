@@ -6,7 +6,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
-import '../App.css';
+import './Calculator.css';
 import * as math from 'mathjs';
 import buttons from '../buttons';
 
@@ -89,7 +89,7 @@ const Calculator: React.FC = () => {
 
       switch (event.code) {
         case 'KeyN':
-          // negate();
+          negate();
           break;
         case 'Backspace':
           setExpression(expression.slice(0, expression.length - 1));
