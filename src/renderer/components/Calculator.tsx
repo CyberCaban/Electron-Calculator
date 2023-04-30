@@ -37,7 +37,7 @@ const Calculator: React.FC = () => {
 
   const handleCalculate = () => {
     try {
-      const result = +math.evaluate(expression).toFixed(4);
+      const result = +math.evaluate(expression).toFixed(6);
       if (isNaN(result)) {
         setExpression('Error');
       } else {
@@ -70,18 +70,6 @@ const Calculator: React.FC = () => {
     }
     return null;
   };
-
-  const actions = buttons.map((item) => {
-    // eslint-disable-next-line prettier/prettier
-    return (
-      <div
-        className={`action num_pad ${item.classname}`}
-        onClick={() => getFunctionButton(item.type, item.value)}
-      >
-        <p>{item.value}</p>
-      </div>
-    );
-  });
 
   useEffect(() => {
     const keyboardInput = (event: any) => {
@@ -166,7 +154,19 @@ const Calculator: React.FC = () => {
         <div id="calc_window">
           <span id="window_result">{expression}</span>
         </div>
-        <div id="calc_actions">{actions}</div>
+        <div id="calc_actions">
+          {buttons.map((item) => {
+            return (
+              <div
+                className={`action num_pad ${item.classname}`}
+                onClick={() => getFunctionButton(item.type, item.value)}
+                key={item.value}
+              >
+                <p>{item.value}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );
