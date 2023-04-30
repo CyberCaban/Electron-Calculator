@@ -37,7 +37,7 @@ const Calculator: React.FC = () => {
 
   const handleCalculate = () => {
     try {
-      const result = math.evaluate(expression);
+      const result = +math.evaluate(expression).toFixed(4);
       if (isNaN(result)) {
         setExpression('Error');
       } else {

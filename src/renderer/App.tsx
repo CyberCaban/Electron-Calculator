@@ -34,10 +34,10 @@ function App() {
       </div>
       <div id={toggleSelect ? 'calcSelect' : 'calcSelectNone'}>
         <div id="defaultCalc" onClick={() => togglePage('defaultCalc')}>
-          defaultCalc
+          Calculator
         </div>
         <div id="converterCalc" onClick={() => togglePage('converterCalc')}>
-          converterCalc
+          Converter
         </div>
       </div>
       <div
@@ -50,7 +50,7 @@ function App() {
         <div className="line" />
         <div className="line" />
       </div>
-      <Suspense>
+      <Suspense fallback="Loading...">
         {page === 'defaultCalc' ? <CalculatorComponent /> : null}
         {page === 'converterCalc' ? <ConverterComponent /> : null}
       </Suspense>
