@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable no-shadow */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/jsx-no-useless-fragment */
@@ -73,7 +74,7 @@ const Calculator: React.FC = () => {
 
   useEffect(() => {
     const keyboardInput = (event: any) => {
-      console.log(event.code);
+      console.log(event);
 
       switch (event.code) {
         case 'KeyN':
@@ -157,13 +158,13 @@ const Calculator: React.FC = () => {
         <div id="calc_actions">
           {buttons.map((item) => {
             return (
-              <div
+              <button
                 className={`action num_pad ${item.classname}`}
                 onClick={() => getFunctionButton(item.type, item.value)}
                 key={item.value}
               >
                 <p>{item.value}</p>
-              </div>
+              </button>
             );
           })}
         </div>

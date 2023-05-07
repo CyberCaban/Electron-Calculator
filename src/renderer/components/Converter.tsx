@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable prefer-template */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable react/jsx-no-useless-fragment */
@@ -6,6 +8,7 @@
 /* eslint-disable react/function-component-definition */
 import React, { useState, useEffect } from 'react';
 import './Converter.css';
+import buttons from '../buttons';
 
 type IUnit =
   | 'Bit'
@@ -34,26 +37,32 @@ const ConversionRate: Record<IUnit, number> = {
   Petabyte: 9007199254740992,
 };
 
-console.log(ConversionRate.Gigabyte);
-
 const Converter: React.FC = () => {
-  const [expression, setExpression] = useState('');
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
   const [fromUnit, setFromUnit] = useState<IUnit>('Bit');
   const [toUnit, setToUnit] = useState<IUnit>('Bit');
 
   const handleClick = (value: string) => {
-    setExpression(expression + value);
+    if (value === 'CE') {
+      setFrom('');
+      return;
+    }
+    setFrom(from + value);
   };
 
   useEffect(() => {
     console.log('fromUnit', fromUnit, 'toUnit', toUnit);
-  }, [toUnit, fromUnit]);
+    setTo(String((+from * ConversionRate[fromUnit]) / ConversionRate[toUnit]));
+  }, [toUnit, fromUnit, from]);
 
   useEffect(() => {
     const keyboardInput = (event: any) => {
+      // console.log(event);
+
       switch (event.code) {
         case 'Backspace':
-          setExpression(expression.slice(0, expression.length - 1));
+          setFrom(from.slice(0, from.length - 1));
           break;
         case 'Numpad0':
           handleClick('0');
@@ -101,7 +110,7 @@ const Converter: React.FC = () => {
     <>
       <div id="conv">
         <div id="conv_window">
-          <span id="window_input">{expression + ' ' + fromUnit}</span>
+          <span id="window_input">{from + ' ' + fromUnit}</span>
           <select
             name="fromUnit"
             id="fromUnitAction"
@@ -112,7 +121,7 @@ const Converter: React.FC = () => {
               <option value={unit}>{unit}</option>
             ))}
           </select>
-          <span id="window_result">{expression + ' ' + toUnit}</span>
+          <span id="window_result">{to + ' ' + toUnit}</span>
           <select
             name="toUnit"
             id="toUnitAction"
@@ -124,7 +133,19 @@ const Converter: React.FC = () => {
             ))}
           </select>
         </div>
-        <div id="conv_actions"></div>
+        <div id="conv_actions">
+          {buttons.map((item) => {
+            return (
+              <div
+                className={`action num_pad ${item.classname}`}
+                onClick={() => handleClick(item.value)}
+                key={item.value}
+              >
+                <p>{item.value}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );

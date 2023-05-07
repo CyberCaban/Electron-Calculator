@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import './App.css';
-import { useState, Suspense, lazy } from 'react';
+import { useState, Suspense, lazy, useEffect } from 'react';
 
 type IPages = 'defaultCalc' | 'converterCalc';
 
@@ -26,6 +26,22 @@ function App() {
       setPage('converterCalc');
     }
   }
+
+  useEffect(() => {
+    const keypress = (event: any) => {
+      if (event.altKey && event.code === 'Digit1') {
+        setPage('defaultCalc');
+      }
+      if (event.altKey && event.code === 'Digit2') {
+        setPage('converterCalc');
+      }
+    };
+
+    window.addEventListener('keydown', keypress);
+    return () => {
+      window.removeEventListener('keydown', keypress);
+    };
+  });
 
   return (
     <>
