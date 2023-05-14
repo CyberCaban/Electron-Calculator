@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable prefer-template */
 /* eslint-disable react/button-has-type */
 /* eslint-disable no-shadow */
 /* eslint-disable no-restricted-globals */
@@ -7,12 +9,15 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
+import { HistoryOutlined } from '@ant-design/icons';
 import './Calculator.css';
 import * as math from 'mathjs';
 import buttons from '../buttons';
 
 const Calculator: React.FC = () => {
   const [expression, setExpression] = useState('');
+  const [history, setHistory] = useState<string[]>([]);
+  const [showHistory, setShowHistory] = useState(false);
 
   const endsWithOperator = (expression: string) => {
     const operators = ['+', '-', '*', '/'];
@@ -42,6 +47,9 @@ const Calculator: React.FC = () => {
       if (isNaN(result)) {
         setExpression('Error');
       } else {
+        const temp = history.slice();
+        temp.push(expression + ' = ' + String(result));
+        setHistory(temp);
         setExpression(result.toString());
       }
     } catch (error) {
@@ -77,6 +85,9 @@ const Calculator: React.FC = () => {
       console.log(event);
 
       switch (event.code) {
+        case 'KeyH':
+          showHistory ? setShowHistory(false) : setShowHistory(true)
+          break;
         case 'KeyN':
           negate();
           break;
@@ -152,6 +163,21 @@ const Calculator: React.FC = () => {
   return (
     <>
       <div id="calc">
+        <div
+          id="calcHistoryBtn"
+          onClick={() =>
+            showHistory ? setShowHistory(false) : setShowHistory(true)
+          }
+        >
+          <HistoryOutlined
+            style={{
+              color: '#f0f5ff',
+              fontSize: '35px',
+              margin: 'auto',
+            }}
+          />
+        </div>
+
         <div id="calc_window">
           <span id="window_result">{expression}</span>
         </div>
@@ -166,6 +192,11 @@ const Calculator: React.FC = () => {
                 <p>{item.value}</p>
               </button>
             );
+          })}
+        </div>
+        <div id={showHistory ? 'calcHistory' : 'calcHistoryNone'}>
+          {history.map((item) => {
+            return <li>{item}</li>;
           })}
         </div>
       </div>
