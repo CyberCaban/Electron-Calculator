@@ -17,11 +17,11 @@ body {
   overflow: hidden;
 }
 
-#root{
+#root {
   overflow: hidden;
 }
 
-#titleBar {
+.titleBar {
   -webkit-app-region: drag;
   display: flex;
   align-items: center;
@@ -29,13 +29,13 @@ body {
   background-color: rgba(147, 147, 147, 0.616);
 }
 
-#titleBar p {
+.titleBar p {
   font-size: 15px;
   font-weight: bold;
   margin-left: 10px;
 }
 
-#calcSelect {
+.calcSelect {
   position: absolute;
   width: 50px;
   background-color: rgba(0, 0, 0, 0.355);
@@ -56,31 +56,31 @@ body {
   }
 }
 
-#calcSelectNone {
+.calcSelectNone {
   display: none;
 }
 
-#defaultCalc,
-#converterCalc {
+.defaultCalc,
+.converterCalc {
   height: 30px;
   text-align: center;
   font-size: 20px;
 }
 
-#defaultCalc:hover,
-#converterCalc:hover {
+.defaultCalc:hover,
+.converterCalc:hover {
   background-color: rgb(64, 64, 64);
 }
 
-#defaultCalc {
+.defaultCalc {
   margin-top: 50px;
   cursor: pointer;
 }
-#converterCalc {
+.converterCalc {
   cursor: pointer;
 }
 
-#calcBurger {
+.calcBurger {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -92,7 +92,7 @@ body {
   outline: 1px rgb(161, 161, 161) solid;
 }
 
-#calcBurger:hover {
+.calcBurger:hover {
   background-color: rgb(64, 64, 64);
 }
 

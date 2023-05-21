@@ -45,19 +45,22 @@ function App() {
 
   return (
     <>
-      <div id="titleBar">
+      <div className="titleBar">
         <p>SMCalc</p>
       </div>
-      <div id={toggleSelect ? 'calcSelect' : 'calcSelectNone'}>
-        <div id="defaultCalc" onClick={() => togglePage('defaultCalc')}>
+      <div className={toggleSelect ? 'calcSelect' : 'calcSelectNone'}>
+        <div className="defaultCalc" onClick={() => togglePage('defaultCalc')}>
           Calculator
         </div>
-        <div id="converterCalc" onClick={() => togglePage('converterCalc')}>
+        <div
+          className="converterCalc"
+          onClick={() => togglePage('converterCalc')}
+        >
           Converter
         </div>
       </div>
       <div
-        id="calcBurger"
+        className="calcBurger"
         onClick={() =>
           toggleSelect ? settoggleSelect(false) : settoggleSelect(true)
         }

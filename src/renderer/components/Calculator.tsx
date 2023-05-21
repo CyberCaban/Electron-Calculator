@@ -10,8 +10,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState, useEffect } from 'react';
 import { HistoryOutlined } from '@ant-design/icons';
-import './Calculator.css';
 import * as math from 'mathjs';
+import styles from './Calculator.module.css';
 import buttons from '../buttons';
 
 const Calculator: React.FC = () => {
@@ -86,7 +86,7 @@ const Calculator: React.FC = () => {
 
       switch (event.code) {
         case 'KeyH':
-          showHistory ? setShowHistory(false) : setShowHistory(true)
+          showHistory ? setShowHistory(false) : setShowHistory(true);
           break;
         case 'KeyN':
           negate();
@@ -162,9 +162,9 @@ const Calculator: React.FC = () => {
 
   return (
     <>
-      <div id="calc">
+      <div className={styles.calc}>
         <div
-          id="calcHistoryBtn"
+          className={styles.calcHistoryBtn}
           onClick={() =>
             showHistory ? setShowHistory(false) : setShowHistory(true)
           }
@@ -178,14 +178,18 @@ const Calculator: React.FC = () => {
           />
         </div>
 
-        <div id="calc_window">
-          <span id="window_result">{expression}</span>
+        <div className={styles.calc_window}>
+          <span className={styles.window_result}>{expression}</span>
         </div>
-        <div id="calc_actions">
+        <div className={styles.calc_actions}>
           {buttons.map((item) => {
+            let extraClass = '';
+            if (item.classname === 'result' || item.classname === 'plus') {
+              extraClass = styles.plus;
+            }
             return (
               <button
-                className={`action num_pad ${item.classname}`}
+                className={`${styles.action} ${extraClass}`}
                 onClick={() => getFunctionButton(item.type, item.value)}
                 key={item.value}
               >
@@ -194,7 +198,9 @@ const Calculator: React.FC = () => {
             );
           })}
         </div>
-        <div id={showHistory ? 'calcHistory' : 'calcHistoryNone'}>
+        <div
+          className={showHistory ? styles.calcHistory : styles.calcHistoryNone}
+        >
           {history.map((item) => {
             return <li>{item}</li>;
           })}

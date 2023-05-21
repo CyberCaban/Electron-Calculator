@@ -7,8 +7,10 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable react/function-component-definition */
 import React, { useState, useEffect } from 'react';
-import './Converter.css';
+import styles from './Converter.module.css';
 import buttons from '../buttons';
+
+console.log(styles);
 
 type IUnit =
   | 'Bit'
@@ -46,6 +48,16 @@ const Converter: React.FC = () => {
   const handleClick = (value: string) => {
     if (value === 'CE') {
       setFrom('');
+      return;
+    }
+    if (
+      value === '/' ||
+      value === '*' ||
+      value === '-' ||
+      value === '+' ||
+      value === '=' ||
+      value === '+/-'
+    ) {
       return;
     }
     setFrom(from + value);
@@ -108,12 +120,12 @@ const Converter: React.FC = () => {
 
   return (
     <>
-      <div id="conv">
-        <div id="conv_window">
-          <span id="window_input">{from + ' ' + fromUnit}</span>
+      <div className={styles.conv}>
+        <div className={styles.conv_window}>
+          <span className={styles.window_input}>{from + ' ' + fromUnit}</span>
           <select
             name="fromUnit"
-            id="fromUnitAction"
+            className={styles.fromUnitAction}
             onChange={(e) => setFromUnit(e.target.value)}
             value={fromUnit}
           >
@@ -121,10 +133,10 @@ const Converter: React.FC = () => {
               <option value={unit}>{unit}</option>
             ))}
           </select>
-          <span id="window_result">{to + ' ' + toUnit}</span>
+          <span className={styles.window_result}>{to + ' ' + toUnit}</span>
           <select
             name="toUnit"
-            id="toUnitAction"
+            className={styles.toUnitAction}
             onChange={(e) => setToUnit(e.target.value)}
             value={toUnit}
           >
@@ -133,11 +145,15 @@ const Converter: React.FC = () => {
             ))}
           </select>
         </div>
-        <div id="conv_actions">
+        <div className={styles.conv_actions}>
           {buttons.map((item) => {
+            let extraClass = '';
+            if (item.classname === 'result' || item.classname === 'plus') {
+              extraClass = styles.plus;
+            }
             return (
               <div
-                className={`action num_pad ${item.classname}`}
+                className={`${styles.action} ${extraClass}`}
                 onClick={() => handleClick(item.value)}
                 key={item.value}
               >

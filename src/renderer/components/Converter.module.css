@@ -1,53 +1,21 @@
-#calc {
+select {
+  margin: 0 10px 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.conv {
   display: grid;
   width: 100vw;
   height: calc(100vh - 30px);
-  grid-template-rows: 1fr 4fr;
+  grid-template-rows: 1fr 3fr;
   grid-auto-rows: 100px;
 }
 
-#calcHistoryBtn {
-  display: flex;
-  width: 50px;
-  height: 50px;
-  background-color: rgba(0, 0, 0, 0.603);
-  outline: 1px rgb(161, 161, 161) solid;
-  position: absolute;
-  left: calc(100vw - 50px);
-}
-#calcHistoryBtn:hover {
-  background-color: rgb(64, 64, 64);
-}
-
-#calcHistory {
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-start;
-  flex-direction: column-reverse;
-  position: absolute;
-  width: 100vw;
-  height: 75vh;
-  top: 100vh;
-  background-color: rgba(0, 0, 0, 0.761);
-  animation: forwards historyslide 0.2s ease;
-  overflow-y: scroll;
-  user-select: none;
-}
-
-#calcHistoryNone {
-  display: none;
-}
-
-#calcHistory > li {
-  color: #ffffff;
-  font-size: 25px;
-}
-
-#calc_window {
+.conv_window {
   min-height: 100px;
-  margin-top: 50px;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: flex-end;
   justify-content: flex-end;
   font-size: 50px;
@@ -55,7 +23,12 @@
   color: white;
 }
 
-#calc_actions {
+.window_input,
+.window_result {
+  font-size: 30px;
+}
+
+.conv_actions {
   display: grid;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -108,15 +81,6 @@
   opacity: 1;
 }
 
-.action:focus {
-  border: none;
-  outline: none;
-}
-
-.action:hover {
-  background-color: rgba(101, 101, 101, 0.603);
-}
-
 .action p {
   font-size: 30px;
 }
@@ -125,13 +89,4 @@
 .result {
   height: 99%;
   grid-row: span 2;
-}
-
-@keyframes historyslide {
-  from {
-    top: 100vh;
-  }
-  to {
-    top: 25vh;
-  }
 }
